@@ -6,36 +6,36 @@ export default function Navbar(){
     const navList = (
         <ul className="flex space-x-6 text-white font-medium text-md px-5 ">
             {/* Home */}
-            <li>
+            <li className="hover:text-violet-900 ">
                 <Link to={'/'}>Home</Link>
             </li>
             {/* All Product */}
-            <li>
+            <li className="hover:text-violet-900 ">
                 <Link to={'/allproduct'}>All Product</Link>
             </li>
             {/* Signup */}
-            <li>
+            <li className="hover:text-violet-900 ">
                 <Link to={'/signup'}>Signup</Link>
             </li>
             {/* User */}
-            <li>
+            <li className="hover:text-violet-900 ">
                 <Link to={'/'}>Kamal</Link>
             </li>
             {/* Admin */}
-            {/* <li>
+            {/* <li className="hover:text-violet-900 ">
             </li> */}
             {/* logout */}
-            {/* <li>
+            {/* <li className="hover:text-violet-900 ">
             </li> */}
             {/* Cart */}
-            <li>
+            <li className="hover:text-violet-900 ">
                 <Link to={'/cart'}>
                 </Link>
             </li>
         </ul>
     )
     return (
-        <nav className="bg-pink-600 sticky top-0">
+        <nav className="bg-violet-600 sticky top-0">
             {/* main  */}
             <div className="lg:flex lg:justify-between items-center py-3 lg:px-3 ">
                 {/* left  */}
