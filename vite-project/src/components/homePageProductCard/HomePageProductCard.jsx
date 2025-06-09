@@ -22,7 +22,7 @@ function HomePageProductCard(){
                                     <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer">
                                             <img
                                                 onClick={()=>navigate("/productInfo")}
-                                                className="md:h-60  h-40 w-full"
+                                                className="md:h-60  h-38 w-full"
                                                 src={image}
                                                 alt="blog"
                                             />
@@ -33,7 +33,7 @@ function HomePageProductCard(){
                                             <h1 className="title-font  font-normal text-gray-900 mb-3">
                                                 {title.substring(0, 15)}
                                             </h1>
-                                            <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
+                                            <h1 className="title-font text-lg font-normal text-gray-900 mb-3">
                                                 ₹{price}
                                             </h1>
 

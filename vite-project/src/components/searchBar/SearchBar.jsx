@@ -11,7 +11,7 @@ const SearchBar = () => {
   return (
     <div className="">
     {/* search input  */}
-    <div className="input flex pl-2  rounded-lg bg-gray-200 mx-2">
+    <div className="input flex pl-2 border-1 border-white hover:border-pink-700  rounded-lg bg-gray-200 mx-2">
         <SearchIcon className="mt-2.5 text-gray-500 hover:text-black"/>
         <input
             type="text"
