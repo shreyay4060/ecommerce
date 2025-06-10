@@ -13,6 +13,8 @@ const products = [
     },
 ]
 
+const user = JSON.parse(localStorage.getItem("users"));
+
 function UserDashboard  () {
     return (
         <Layout>
@@ -27,8 +29,10 @@ function UserDashboard  () {
                         </div>
                         {/* text  */}
                         <div className="">
-                            <h1 className=" text-center text-lg"><span className=" font-bold">Name :</span> Kamal Nayan Upadhyay</h1>
-                            <h1 className=" text-center text-lg"><span className=" font-bold">Email :</span> test@gmail.com</h1>
+                            <h1 className=" text-center text-lg"><span className=" text-pink-600 font-bold">Name :</span> {user.name}</h1>
+                            <h1 className=" text-center text-lg"><span className=" text-pink-600 font-bold">Email :</span> {user.email}</h1>
+                            <h1 className=" text-center text-sm"><span className=" text-pink-600 font-bold">Date :</span> {user.date}</h1>
+                            <h1 className=" text-center text-sm"><span className=" text-pink-600 font-bold">Role :</span> {user.role}</h1>
                         </div>
                     </div>
                 </div>

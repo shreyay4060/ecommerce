@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../searchBar/SearchBar";
 import Signup from "../../pages/registration/Signup";
 
@@ -26,26 +26,63 @@ export default function Navbar() {
     toggleSignupModal();
   }
 
+  // navigate
+  const navigate = useNavigate();
+
+  // get user from localStorage
+  const user = JSON.parse(localStorage.getItem("users"));
+  console.log(user);
+
+  // logout function
+  function logout() {
+    localStorage.clear("users");
+    navigate("/login");
+  }
+
   const navList = (
     <ul className="flex space-x-6 text-white font-medium text-md px-5">
       <li className="hover:text-pink-200">
-        <Link to={"/"}>Home</Link>
+        <Link to={"/homePage"}>Home</Link>
       </li>
+
       <li className="hover:text-pink-200">
         <Link to={"/allProductPage"}>All</Link>
       </li>
-      <li className="hover:text-pink-200">
-        <button onClick={toggleSignupModal}>Signup</button>
-      </li>
-      <li className="hover:text-pink-200">
-        <Link to={"/userDashboard"}>User</Link>
-      </li>
-    <li>
-        <Link to={'/adminDashboard'}>Admin</Link> 
-    </li>
-      <li className="hover:text-pink-200">
+
+      {!user ? (
+        <li className="hover:text-pink-200">
+          <button onClick={toggleSignupModal}>Signup</button>
+        </li>
+      ) : (
+        ""
+      )}
+
+      {!user ? (
+        <li>
+          <Link to={"/login"}>Login</Link>
+        </li>
+      ) : (
+        ""
+      )}
+
+      {user?.role === "user" && (
+        <li className="hover:text-pink-200">
+          <Link to={"/userDashboard"}>{user?.name}</Link>
+        </li>
+      )}
+      {user?.role === "admin" && (
+        <li>
+          <Link to={"/adminDashboard"}>{user?.name}</Link>
+        </li>
+      )}
+
+      {user ?  <li className="hover:text-pink-200">
         <Link to={"/cartPage"}>Cart</Link>
-      </li>
+      </li> : ""
+      }
+
+      {/* logout */}
+      {user && <li className=" cursor-pointer border-2 border-pink-600 px-2 rounded-md hover:border-pink-600 pb-1 bg-pink-500 active:bg-pink-700 hover:bg-pink-600" onClick={logout}>Logout</li>}
     </ul>
   );
 

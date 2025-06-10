@@ -13,13 +13,14 @@ import {
   QuerySnapshot,
   where,
 } from "firebase/firestore";
-import { Loader } from "lucide-react";
+import Loader from "../../components/loader/Loader";
 
 const Login = ({ onClose }) => {
   const [userLogin, setUserLogin] = useState({
     email: "",
     password: "",
   });
+  
 
   const context = useContext(myContexts);
 

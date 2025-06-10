@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { auth, fireDB } from "../../firebase/FirebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
-import { Loader } from "lucide-react";
+import  Loader  from "../../components/loader/Loader";
 
 const Signup = ({ values, onChange, onClose, onSubmit }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -81,7 +81,7 @@ const Signup = ({ values, onChange, onClose, onSubmit }) => {
       toast.success("Successfully signedin...")
 
       setLoading(false)
-      navigate("/allProductPage")
+      navigate("/login")
     } catch (error) {
       console.log("there is an error : " + error);
       setLoading(false)
