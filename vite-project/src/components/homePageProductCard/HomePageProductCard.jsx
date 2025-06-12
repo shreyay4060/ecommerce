@@ -25,7 +25,7 @@ function HomePageProductCard(){
                 <div className="container px-5 py-5 mx-auto">
                     <div className="flex flex-wrap -m-4">
                         {getAllProduct.slice(0,8).map((item, index) => {
-                            const {id, productImageUrl, title, price } = item;
+                            const {id, productImageUrl, title, price , description } = item;
                             return (
                                 <div key={index}  className="p-4 w-1/2 lg:w-1/4    md:w-1/3 md:text-s text-sm">
                                     <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer">

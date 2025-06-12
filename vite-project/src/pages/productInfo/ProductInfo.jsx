@@ -1,46 +1,48 @@
 import { useContext, useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import myContexts from "../../context/myContexts";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import toast from "react-hot-toast";
 import { doc, getDoc } from "firebase/firestore";
 import { fireDB } from "../../firebase/FirebaseConfig";
 import Loader from "../../components/loader/Loader";
 
+
 export default function ProductInfo (){
     const context = useContext(myContexts);
-    const {loading , setLoading} = context;
+    const {loading , setLoading } = context;
 
-   
-    const [product, setProduct] = useState('')
+    // navigate
+    const navigate=useNavigate();
 
-    const { id } = useParams()
+    const [product , setProduct] = useState("");
+    
+    // id
+    const {id} = useParams();
 
-    // console.log(product)
-
-    // getProductData
-    const getProductData = async () => {
-        setLoading(true)
-        try {
-            const productTemp = await getDoc(doc(fireDB, "products", id))
-            setProduct(productTemp.data());
-            setLoading(false)
-        } catch (error) {
+    // setProduct function
+    const getSingleProduct = async()=>{
+        setLoading(true);
+        try{
+            const productTemp = await getDoc(doc(fireDB,"products",id));
+            setProduct(productTemp.data())
+            setLoading(false);
+            // console.log(productTemp.data())
+        }
+        catch(error){
             console.log(error)
-            setLoading(false)
         }
     }
-
-
-    useEffect(() => {
-        getProductData()
-    }, [])
+    console.log(product)
+    useEffect(()=>{
+        getSingleProduct()
+    },[])
     return (
         <Layout>
-            <section className="py-5 lg:py-16 font-poppins dark:bg-gray-800">
+            <section className="py-5 lg:py-16 font-poppins dark:bg-gray-200">
                 {loading ?
                     <>
-                        <div className="flex justify-center items-center">
+                        <div className="flex justify-center mt-30 items-center">
                             <Loader />
                         </div>
                     </>
@@ -49,12 +51,12 @@ export default function ProductInfo (){
 
                     <>
                         <div className="max-w-6xl px-4 mx-auto">
-                            <div className="flex flex-wrap mb-24 -mx-4">
-                                <div className="w-full px-4 mb-8 md:w-1/2 md:mb-0">
+                            <div className="flex  mb-24 -mx-4">
+                                <div className="w-full flex justify-center px-4 mb-8 md:w-1/2 md:mb-0">
                                     <div className="">
                                         <div className="">
                                             <img
-                                                className=" w-full lg:h-[39em] rounded-lg"
+                                                className="bg-blend-color-burn lg:h-80 h-60 rounded-lg"
                                                 src={product?.productImageUrl}
                                                 alt=""
                                             />
@@ -64,7 +66,7 @@ export default function ProductInfo (){
                                 <div className="w-full px-4 md:w-1/2">
                                     <div className="lg:pl-20">
                                         <div className="mb-6 ">
-                                            <h2 className="max-w-xl mb-6 text-xl font-semibold leading-loose tracking-wide text-gray-700 md:text-2xl dark:text-gray-300">
+                                            <h2 className="max-w-xl mb-6 text-xl font-semibold leading-loose tracking-wide text-black md:text-2xl ">
                                                 {product?.title}
                                             </h2>
                                             <div className="flex flex-wrap items-center mb-6">
@@ -127,20 +129,23 @@ export default function ProductInfo (){
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <p className="inline-block text-2xl font-semibold text-gray-700 dark:text-gray-400 ">
+                                            <p className="inline-block text-2xl font-semibold text-black  ">
                                                 <span>₹ {product?.price}</span>
                                             </p>
                                         </div>
                                         <div className="mb-6">
-                                            <h2 className="mb-2 text-lg font-bold text-gray-700 dark:text-gray-400">
+                                            <h2 className="mb-2 text-lg font-bold text-black ">
                                             </h2>
-                                            <p>{product?.description}</p>
+                                            
+                                                <pre className="font-bold">Description : </pre>
+                                            <p className="flex">
+                                                 {product.description}</p>
                                         </div>
                                         <div className="mb-6 " />
                                         <div className="flex flex-wrap items-center mb-6">
                                             <button
-                                                className="w-full px-4 py-3 text-center text-pink-600 bg-pink-100 border border-pink-600  hover:bg-pink-600 hover:text-gray-100  rounded-xl"
-                                            >
+                                                className="w-full px-4 py-3 text-center text-white font-bold bg-violet-600 border border-violet-600  hover:bg-violet-800 active:bg-violet-200 active:text-violet-600 hover:text-gray-100  rounded-xl"
+                                            >Add to cart
                                             </button>
                                         </div>
                                     </div>

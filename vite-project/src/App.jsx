@@ -13,9 +13,10 @@ import AdminDashboard from "./pages/adminDashboard/AdminDashboard";
 import AddProductPage from "./pages/adminDashboard/AddProductPage";
 import UpdateProductPage from "./pages/adminDashboard/UpdateProductPage";
 import MyState from "./context/MyState";
-import {Toaster} from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import ProtectedRouteForUser from "./protectedRoute/ProtectedRouteForUser";
 import ProtectedRouteForAdmin from "./protectedRoute/ProtectedRouteForAdmin";
+import CategoryPage from "./pages/categoryPage/CategoryPage";
 
 function App() {
   return (
@@ -31,32 +32,47 @@ function App() {
           <Route path="/allProductPage" element={<AllProductPage />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-
-          <Route path="/userDashboard" element={
-            <ProtectedRouteForUser>
-              <UserDashboard />
-            </ProtectedRouteForUser>
-          } />
-
-          <Route path="/adminDashboard" element={
-            <ProtectedRouteForAdmin>
-              <AdminDashboard/>
-            </ProtectedRouteForAdmin>
+          <Route path="/categoryPage/:categoryname" element={<CategoryPage
+             />
           }/>
 
-          <Route path="/addproduct" element={
-            <ProtectedRouteForAdmin>
-              <AddProductPage/>
-            </ProtectedRouteForAdmin>
-          }/>
+          <Route
+            path="/userDashboard"
+            element={
+              <ProtectedRouteForUser>
+                <UserDashboard />
+              </ProtectedRouteForUser>
+            }
+          />
 
-          <Route path="/updateProduct/:id" element={
-            <ProtectedRouteForAdmin>
-              <UpdateProductPage/>
-            </ProtectedRouteForAdmin>
-          }/>
+          <Route
+            path="/adminDashboard"
+            element={
+              <ProtectedRouteForAdmin>
+                <AdminDashboard />
+              </ProtectedRouteForAdmin>
+            }
+          />
+
+          <Route
+            path="/addproduct"
+            element={
+              <ProtectedRouteForAdmin>
+                <AddProductPage />
+              </ProtectedRouteForAdmin>
+            }
+          />
+
+          <Route
+            path="/updateProduct/:id"
+            element={
+              <ProtectedRouteForAdmin>
+                <UpdateProductPage />
+              </ProtectedRouteForAdmin>
+            }
+          />
         </Routes>
-          <Toaster />
+        <Toaster />
       </Router>
     </MyState>
   );
