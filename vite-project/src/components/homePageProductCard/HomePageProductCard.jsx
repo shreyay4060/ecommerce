@@ -1,29 +1,38 @@
-import React from "react";
-import productData from "./data";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router";
+import myContexts from "../../context/myContexts";
+import Loader from "../loader/Loader";
 
 function HomePageProductCard(){
     const navigate = useNavigate();
+
+    // context
+    const context = useContext(myContexts);
+    const{getAllProduct , loading} = context;
     return (
         <div className="mt-10">
             {/* Heading  */}
             <div className="">
                 <h1 className=" text-center mb-5 text-2xl font-semibold">Bestselling Products</h1>
             </div>
+            <div className="flex justify-center">
+                 {loading && <Loader />}
+            </div>
 
             {/* main  */}
             <section className="text-gray-600 body-font">
+                       
                 <div className="container px-5 py-5 mx-auto">
                     <div className="flex flex-wrap -m-4">
-                        {productData.map((item, index) => {
-                            const { image, title, price } = item;
+                        {getAllProduct.slice(0,8).map((item, index) => {
+                            const {id, productImageUrl, title, price } = item;
                             return (
                                 <div key={index}  className="p-4 w-1/2 lg:w-1/4    md:w-1/3 md:text-s text-sm">
                                     <div className="h-full border border-gray-300 rounded-xl overflow-hidden shadow-md cursor-pointer">
                                             <img
-                                                onClick={()=>navigate("/productInfo")}
+                                                onClick={()=>navigate(`/productInfo/${id}`)}
                                                 className="md:h-60  h-38 w-full"
-                                                src={image}
+                                                src={productImageUrl}
                                                 alt="blog"
                                             />
                                         <div className="p-6">

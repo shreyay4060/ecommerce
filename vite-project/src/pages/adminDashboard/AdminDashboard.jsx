@@ -1,14 +1,22 @@
 
+import { useContext } from "react";
 import OrderDetail from "../../components/admin/OrderDetail";
 import ProductDetail from "../../components/admin/ProductDetail";
 import UserDetail from "../../components/admin/UserDetail";
 import Layout from "../../components/layout/Layout";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import myContexts from "../../context/myContexts";
 
 function AdminDashboard () {
 
 
     const admin = JSON.parse(localStorage.getItem("users"))
+
+    // total number of product 
+    const context = useContext(myContexts);
+
+    const {totalProduct} = context;
+    console.log(totalProduct)
 
     return (
         <Layout>
@@ -65,7 +73,7 @@ function AdminDashboard () {
                                     </svg>
 
                                 </div>
-                                <h2 className="title-font font-medium text-3xl fonts1" >(10)</h2>
+                                <h2 className="title-font font-medium text-3xl fonts1" >({totalProduct})</h2>
                                 <p className="   font-bold" >Total Products</p>
                             </div>
                         </Tab>

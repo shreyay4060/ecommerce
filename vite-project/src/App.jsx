@@ -26,7 +26,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/homePage" element={<HomePage />} />
           <Route path="/*" element={<NoPage />} />
-          <Route path="/productInfo" element={<ProductInfo />} />
+          <Route path="/productInfo/:id" element={<ProductInfo />} />
           <Route path="/cartPage" element={<CartPage />} />
           <Route path="/allProductPage" element={<AllProductPage />} />
           <Route path="/signup" element={<Signup />} />
@@ -50,7 +50,7 @@ function App() {
             </ProtectedRouteForAdmin>
           }/>
 
-          <Route path="/updateProduct" element={
+          <Route path="/updateProduct/:id" element={
             <ProtectedRouteForAdmin>
               <UpdateProductPage/>
             </ProtectedRouteForAdmin>
