@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "../searchBar/SearchBar";
 import Signup from "../../pages/registration/Signup";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
   const [showSignupModal, setShowSignupModal] = useState(false);
@@ -38,6 +39,9 @@ export default function Navbar() {
     localStorage.clear("users");
     navigate("/login");
   }
+
+  // redux
+  const cartItems = useSelector(state => state.cart);
 
   const navList = (
     <ul className="flex space-x-6 text-white font-medium text-md px-5">
@@ -77,7 +81,7 @@ export default function Navbar() {
       )}
 
       {user ?  <li className="hover:text-pink-200">
-        <Link to={"/cartPage"}>Cart</Link>
+        <Link to={"/cartPage"}>Cart({cartItems.length})</Link>
       </li> : ""
       }
 

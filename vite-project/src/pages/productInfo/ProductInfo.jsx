@@ -6,6 +6,8 @@ import toast from "react-hot-toast";
 import { doc, getDoc } from "firebase/firestore";
 import { fireDB } from "../../firebase/FirebaseConfig";
 import Loader from "../../components/loader/Loader";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, deleteFromCart } from "../../redux/cartSlice";
 
 
 export default function ProductInfo (){
@@ -37,6 +39,31 @@ export default function ProductInfo (){
     useEffect(()=>{
         getSingleProduct()
     },[])
+
+    // redux
+    const cartItems = useSelector(state => state.cart);
+    const dispatch = useDispatch();
+
+    // addToCartFun
+    function addToCartFun(item){
+        dispatch(addToCart({...item , time : new Date().toLocaleString()}));
+        toast.success("Added to cart")
+    }
+
+    // deleteFromCartFun
+   function deleteFromCartFun(item) {
+       const safeItem = {
+         ...item,
+         time: item.time?.toMillis?.() || item.time, 
+       };
+       dispatch(deleteFromCart(safeItem));
+       toast.success("Deleted from cart");
+     }
+
+    // useEffect
+    useEffect(()=>{
+        localStorage.setItem("cart",JSON.stringify(cartItems))
+    },[cartItems])
     return (
         <Layout>
             <section className="py-5 lg:py-16 font-poppins dark:bg-gray-200">
@@ -143,10 +170,18 @@ export default function ProductInfo (){
                                         </div>
                                         <div className="mb-6 " />
                                         <div className="flex flex-wrap items-center mb-6">
+                                            {cartItems.some((product)=>product.id === cartItems.id) ?
                                             <button
-                                                className="w-full px-4 py-3 text-center text-white font-bold bg-violet-600 border border-violet-600  hover:bg-violet-800 active:bg-violet-200 active:text-violet-600 hover:text-gray-100  rounded-xl"
+                                            onClick={()=>deleteFromCartFun(product)}
+                                            className="w-full px-4 py-3 text-center text-white font-bold bg-violet-600 border border-violet-600  hover:bg-violet-800 active:bg-violet-200 active:text-violet-600 hover:text-gray-100  rounded-xl"
+                                            >Delete From Cart
+                                            </button> :
+                                            <button
+                                            onClick={()=>addToCartFun(product)}
+                                            className="w-full px-4 py-3 text-center text-white font-bold bg-violet-600 border border-violet-600  hover:bg-violet-800 active:bg-violet-200 active:text-violet-600 hover:text-gray-100  rounded-xl"
                                             >Add to cart
                                             </button>
+                                        }
                                         </div>
                                     </div>
                                 </div>

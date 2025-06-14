@@ -1,8 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import Layout from "../../components/layout/Layout";
 import myContexts from "../../context/myContexts";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, deleteFromCart } from "../../redux/cartSlice";
+import toast from "react-hot-toast";
 
 export default function CategoryPage() {
   const { categoryname } = useParams();
@@ -21,6 +24,28 @@ export default function CategoryPage() {
     navigate("/homePage")
   }
 
+//   redux addToCart
+const cartItems = useSelector(state => state.cart);
+const dispatch= useDispatch();
+
+// addToCartFunction
+function addToCartFun(item){
+    dispatch(addToCart({...item, time:new Date().toLocaleString()}));
+    toast.success("Added to cart");
+}
+
+// deleteFromCartfun
+function deleteFromCartFun(item){
+    dispatch(deleteFromCart({...item,time:new Date().toLocaleString()}));
+    toast.success("Deleted from cart")
+}
+
+
+// useEffect function
+
+useEffect(()=>{
+    localStorage.setItem("cart",JSON.stringify(cartItems))
+},[cartItems])
   return (
     <Layout>
       {/* Heading */}
@@ -64,9 +89,14 @@ export default function CategoryPage() {
                           ₹{item.price}
                         </p>
                         <div className="flex justify-center">
-                          <button className="bg-violet-600 text-sm hover:bg-violet-800 text-white font-bold py-1 px-3 rounded text-sm transition duration-200">
+                            {cartItems.some((product)=>product.id===item.id)?
+                             <button onClick={()=>deleteFromCartFun(item)} className="bg-violet-600 text-sm hover:bg-violet-800 text-white font-bold py-1 px-3 rounded  transition duration-200">
+                            Delete from cart
+                          </button> :
+                          <button onClick={()=>addToCartFun(item)} className="bg-violet-600 text-sm hover:bg-violet-800 text-white font-bold py-1 px-3 rounded  transition duration-200">
                             Add To Cart
                           </button>
+                        }
                         </div>
                       </div>
                     </div>
