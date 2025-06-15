@@ -1,6 +1,6 @@
 import Layout from "../../components/layout/Layout";
 import { Trash } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   decrementQuantity,
@@ -8,10 +8,18 @@ import {
   incrementQuantity,
 } from "../../redux/cartSlice";
 import toast from "react-hot-toast";
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import BuyNowModal from "../../components/buyNowModal/BuyNowModal";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
+import myContexts from "../../context/myContexts";
+import { fireDB } from "../../firebase/FirebaseConfig";
 
 function CartPage() {
   const navigate = useNavigate();
+
+  const context = useContext(myContexts);
+
+  const {loading , setLoading} = context;
 
   const cartItems = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -52,6 +60,72 @@ function CartPage() {
   let discount = (totalPrice * 5) / 100;
   discount = Math.floor(discount);
   console.log(discount);
+
+
+  //   user
+const user = JSON.parse(localStorage.getItem("users"))
+
+  const [deliveryDetails, setDeliveryDetails] = useState({
+    name: "",
+    address: "",
+    pincode: "",
+    mobileNumber: "",
+    time:Timestamp.now(),
+    date:new Date().toLocaleString(
+        "en-US",{
+            month:"short",
+            day:"2-digit",
+            year:"numeric"
+        }
+    )
+  });
+
+
+
+//   BuyNowFun
+
+function BuyNowFun(){
+    if(deliveryDetails.name==="" || deliveryDetails.address === "" || deliveryDetails.pincode === "" || deliveryDetails.mobileNumber==="" ){
+       return toast.error("Please fill all the details")
+    }
+
+    // orderInfo
+    const orderInfo = {
+        cartItems,
+        deliveryDetails,
+        userId : user.uid,
+        email : user.email,
+        status:"confirmed",
+        time:Timestamp.now(),
+        date:new Date().toLocaleString(
+            "en-US",{
+                month:"short",
+                day:"2-digit",
+                year:"numeric"
+            }
+        )
+    }
+    setLoading(true);
+    try{
+        const orderRef = collection(fireDB,"order");
+        addDoc(orderRef,orderInfo)
+        setLoading(false);
+        setDeliveryDetails({
+            name:"",
+            address:"",
+            pincode:"",
+            mobileNumber:""
+        })
+        toast.success("Your order is placed successfully")
+    }
+    catch(error){
+        toast.error("error in ordering products")
+    }
+    
+}
+
+
+
 
   return (
     <Layout>
@@ -195,9 +269,9 @@ function CartPage() {
                   </dl>
                   <div className="px-2 pb-4 font-medium text-green-700">
                     <div className="flex gap-4 mb-6">
-                      <button className="w-full px-4 py-3 text-center text-gray-100 bg-pink-600 border border-transparent dark:border-gray-700 hover:border-pink-500 hover:text-pink-700 hover:bg-pink-100 rounded-xl">
-                        Buy now
-                      </button>
+                        {user ?
+                     <BuyNowModal BuyNowFun = {BuyNowFun} deliveryDetails={deliveryDetails} setDeliveryDetails = {setDeliveryDetails}/>
+                    :<Navigate to={"/login"} />}
                     </div>
                   </div>
                 </div>

@@ -84,6 +84,7 @@ export default function Navbar() {
         <Link to={"/cartPage"}>Cart({cartItems.length})</Link>
       </li> : ""
       }
+     
 
       {/* logout */}
       {user && <li className=" cursor-pointer border-2 border-pink-600 px-2 rounded-md hover:border-pink-600 pb-1 bg-pink-500 active:bg-pink-700 hover:bg-pink-600" onClick={logout}>Logout</li>}

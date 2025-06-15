@@ -27,7 +27,7 @@ export default function ProductInfo (){
         setLoading(true);
         try{
             const productTemp = await getDoc(doc(fireDB,"products",id));
-            setProduct(productTemp.data())
+            setProduct({...productTemp.data() , id : productTemp.id})
             setLoading(false);
             // console.log(productTemp.data())
         }
@@ -170,7 +170,7 @@ export default function ProductInfo (){
                                         </div>
                                         <div className="mb-6 " />
                                         <div className="flex flex-wrap items-center mb-6">
-                                            {cartItems.some((product)=>product.id === cartItems.id) ?
+                                            {cartItems.some((p)=>p.id === product.id) ?
                                             <button
                                             onClick={()=>deleteFromCartFun(product)}
                                             className="w-full px-4 py-3 text-center text-white font-bold bg-violet-600 border border-violet-600  hover:bg-violet-800 active:bg-violet-200 active:text-violet-600 hover:text-gray-100  rounded-xl"
