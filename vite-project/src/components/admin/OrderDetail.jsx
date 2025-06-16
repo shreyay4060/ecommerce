@@ -4,7 +4,7 @@ import Loader from "../loader/Loader";
 
 const OrderDetail = () => {
   const context = useContext(myContexts);
-  const { getAllOrder, loading } = context;
+  const { getAllOrder, loading , deleteOrderFun } = context;
   console.log(getAllOrder);
 
   // user
@@ -64,6 +64,9 @@ const OrderDetail = () => {
                 </th>
                 <th className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-violet-300">
                   Email
+                </th>
+                <th className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-violet-300">
+                  Action
                 </th>
               </tr>
 
@@ -131,6 +134,9 @@ const OrderDetail = () => {
                           </td>
                           <td className="h-12 px-6 text-md border-t border-l first:border-l-0 border-pink-100 ">
                             {order.email}
+                          </td>
+                          <td onClick={()=>deleteOrderFun(order.id)}  className="h-12 text-orange-600 cursor-pointer px-6 text-md border-t border-l first:border-l-0 border-pink-100 ">
+                            Delete
                           </td>
                         </>
                       )}

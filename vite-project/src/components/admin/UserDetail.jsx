@@ -5,7 +5,7 @@ const UserDetail = () => {
   // getAllUsers from myState
 
   const context = useContext(myContexts);
-  const { getAllUsers } = context;
+  const { getAllUsers ,deleteUserFun } = context;
   return (
     <div>
       <div>
@@ -55,8 +55,15 @@ const UserDetail = () => {
                 >
                   Time
                 </th>
+                <th
+                  scope="col"
+                  className="h-12 px-6 text-md font-bold fontPara border-l first:border-l-0 border-pink-100 text-slate-700 bg-violet-300"
+                >
+                 Delete
+                </th>
               </tr>
               {getAllUsers.map((item, index) => {
+                const {id}= item
                 return (
                 
                     <tr key={index} className="text-pink-300 bg-pink-200">
@@ -66,17 +73,20 @@ const UserDetail = () => {
                       <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-900 first-letter:uppercase ">
                         {item.uid}
                       </td>
-                      <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-900 text-green-500 cursor-pointer ">
+                      <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-900  cursor-pointer ">
                         {item.name}
                       </td>
-                      <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-900 text-red-500 cursor-pointer ">
+                      <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-900  cursor-pointer ">
                         {item.email}
                       </td>
-                      <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-900 text-red-500 cursor-pointer ">
+                      <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-900  cursor-pointer ">
                         {item.role}
                       </td>
-                      <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-900 text-red-500 cursor-pointer ">
+                      <td className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 text-slate-900  cursor-pointer ">
                         {item.date}
+                      </td>
+                      <td onClick={()=>deleteUserFun(item.id)} className="h-12 px-6 text-md transition duration-300 border-t border-l first:border-l-0 border-pink-100 stroke-slate-500 active:text-red-800 font-bold text-red-500 cursor-pointer ">
+                        Delete
                       </td>
                     </tr>
                   

@@ -15,7 +15,7 @@ function AdminDashboard () {
     // total number of product 
     const context = useContext(myContexts);
 
-    const {totalProduct , getAllProduct } = context;
+    const {totalProduct , getAllProduct , getAllUsers } = context;
     console.log(totalProduct)
 
     return (
@@ -130,7 +130,7 @@ function AdminDashboard () {
                                     </svg>
 
                                 </div>
-                                <h2 className="title-font font-medium text-3xl  fonts1" >(10)</h2>
+                                <h2 className="title-font font-medium text-3xl  fonts1" >({getAllUsers.length})</h2>
                                 <p className="   font-bold" >Total User</p>
                             </div>
                         </Tab>

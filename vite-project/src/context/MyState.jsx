@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import MyContexts from "./myContexts";
 import {
   collection,
+  deleteDoc,
+  doc,
   getDocs,
   onSnapshot,
   orderBy,
   query,
   QuerySnapshot,
 } from "firebase/firestore";
+import { toast } from "react-hot-toast";
 import { fireDB } from "../firebase/FirebaseConfig";
 
 export default function MyState({ children }) {
@@ -69,18 +72,49 @@ export default function MyState({ children }) {
     setLoading(true);
     try {
       const q = query(collection(fireDB, "user"), orderBy("time"));
-      const data = onSnapshot(q,(QuerySnapshot)=>{
-          let usersArray = [];
-        QuerySnapshot.forEach((doc)=>{
-            usersArray.push({...doc.data(),id:doc.id});
+      const data = onSnapshot(q, (QuerySnapshot) => {
+        let usersArray = [];
+        QuerySnapshot.forEach((doc) => {
+          usersArray.push({ ...doc.data(), id: doc.id });
         });
         setGetAllUsers(usersArray);
         setLoading(false);
-      })
-      return()=>data;
+      });
+      return () => data;
     } catch (error) {
       console.log(error);
-      setLoading(false)
+      setLoading(false);
+    }
+  };
+
+  // deleteOrder from order function
+
+  const deleteOrderFun = async (id) => {
+    setLoading(true);
+    try {
+      await deleteDoc(doc(fireDB, "order", id));
+      toast.success("Order deleted successfully");
+      getAllOrderFunction();
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to delete order");
+    }
+  };
+
+  // deleteUserFun
+
+  const deleteUserFun = async (id) => {
+    setLoading(true);
+
+    try {
+      await deleteDoc(doc(fireDB, "user", id));
+      toast.success("User deleted successfully...");
+      getAllUserFun();
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("Error in deleting user");
     }
   };
 
@@ -101,7 +135,9 @@ export default function MyState({ children }) {
           getAllProduct,
           getAllOrder,
           getAllOrderFunction,
-          getAllUsers
+          getAllUsers,
+          deleteOrderFun,
+          deleteUserFun,
         }}
       >
         {children}
