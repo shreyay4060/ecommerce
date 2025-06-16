@@ -19,10 +19,13 @@ function CartPage() {
 
   const context = useContext(myContexts);
 
-  const {loading , setLoading} = context;
+  const { loading, setLoading } = context;
 
   const cartItems = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+
+  // New state for order placed message
+  const [orderPlaced, setOrderPlaced] = useState(false);
 
   // deletFromCart function
   function deleteFromCartFun(item) {
@@ -44,12 +47,10 @@ function CartPage() {
   const cartTotal = cartItems
     .map((item) => item.quantity)
     .reduce((prev, curr) => prev + curr, 0);
-  // console.log(cartTotal)
 
   const totalPrice = cartItems
     .map((item) => item.price * item.quantity)
     .reduce((prev, curr) => prev + curr, 0);
-  console.log(totalPrice);
 
   // useEffect
   useEffect(() => {
@@ -59,73 +60,68 @@ function CartPage() {
   // discount
   let discount = (totalPrice * 5) / 100;
   discount = Math.floor(discount);
-  console.log(discount);
-
 
   //   user
-const user = JSON.parse(localStorage.getItem("users"))
+  const user = JSON.parse(localStorage.getItem("users"));
 
   const [deliveryDetails, setDeliveryDetails] = useState({
     name: "",
     address: "",
     pincode: "",
     mobileNumber: "",
-    time:Timestamp.now(),
-    date:new Date().toLocaleString(
-        "en-US",{
-            month:"short",
-            day:"2-digit",
-            year:"numeric"
-        }
-    )
+    time: Timestamp.now(),
+    date: new Date().toLocaleString("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+    }),
   });
 
-
-
-//   BuyNowFun
-
-function BuyNowFun(){
-    if(deliveryDetails.name==="" || deliveryDetails.address === "" || deliveryDetails.pincode === "" || deliveryDetails.mobileNumber==="" ){
-       return toast.error("Please fill all the details")
+  //   BuyNowFun
+  function BuyNowFun() {
+    if (
+      deliveryDetails.name === "" ||
+      deliveryDetails.address === "" ||
+      deliveryDetails.pincode === "" ||
+      deliveryDetails.mobileNumber === ""
+    ) {
+      return toast.error("Please fill all the details");
     }
 
     // orderInfo
     const orderInfo = {
-        cartItems,
-        deliveryDetails,
-        userId : user.uid,
-        email : user.email,
-        status:"confirmed",
-        time:Timestamp.now(),
-        date:new Date().toLocaleString(
-            "en-US",{
-                month:"short",
-                day:"2-digit",
-                year:"numeric"
-            }
-        )
-    }
+      cartItems,
+      deliveryDetails,
+      userId: user.uid,
+      email: user.email,
+      status: "confirmed",
+      time: Timestamp.now(),
+      date: new Date().toLocaleString("en-US", {
+        month: "short",
+        day: "2-digit",
+        year: "numeric",
+      }),
+    };
     setLoading(true);
-    try{
-        const orderRef = collection(fireDB,"order");
-        addDoc(orderRef,orderInfo)
-        setLoading(false);
-        setDeliveryDetails({
-            name:"",
-            address:"",
-            pincode:"",
-            mobileNumber:""
-        })
-        toast.success("Your order is placed successfully")
+    try {
+      const orderRef = collection(fireDB, "order");
+      addDoc(orderRef, orderInfo);
+      setLoading(false);
+      setDeliveryDetails({
+        name: "",
+        address: "",
+        pincode: "",
+        mobileNumber: "",
+      });
+      // Clear the cart after ordering
+      localStorage.removeItem("cart");
+      dispatch({ type: "cart/clearCart" }); // You need to add clearCart reducer in your cartSlice
+      setOrderPlaced(true); // Show order placed message
+      toast.success("Your order is placed successfully");
+    } catch (error) {
+      toast.error("error in ordering products");
     }
-    catch(error){
-        toast.error("error in ordering products")
-    }
-    
-}
-
-
-
+  }
 
   return (
     <Layout>
@@ -134,7 +130,18 @@ function BuyNowFun(){
           <h1 className="text-2xl hover:text-violet-600 flex justify-center font-bold tracking-tight text-gray-900 sm:text-4xl">
             Shopping Cart
           </h1>
-          {cartItems.length > 0 ? (
+          {orderPlaced ? (
+            <div className="text-center mt-10">
+              <div className="text-lg font-semibold text-green-600 mb-4">
+                Check your orders on your dashBoard
+              </div>
+              <img
+                src="https://th.bing.com/th/id/OIP.jCNUT175VB4lXBu8iEPIgAAAAA?rs=1&pid=ImgDetMain"
+                alt="No Products"
+                className="w-72 mx-auto"
+              />
+            </div>
+          ) : cartItems.length > 0 ? (
             <form className="mt-7 lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
               <section
                 aria-labelledby="cart-heading"
@@ -149,12 +156,15 @@ function BuyNowFun(){
                       <li className="flex py-6 sm:py-6 ">
                         <div className="flex-shrink-0">
                           <img
-                            src={product.productImageUrl}
+                            src={
+                              product.productImageUrl ||
+                              product.imgURL ||
+                              product.image
+                            }
                             alt={product.title}
                             className="sm:h-38 sm:w-38 h-24 w-24 rounded-md object-contain object-center"
                           />
                         </div>
-
                         <div className="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
                           <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
                             <div>
@@ -268,10 +278,16 @@ function BuyNowFun(){
                     </div>
                   </dl>
                   <div className="px-2 pb-4 font-medium text-green-700">
-                    <div className="flex gap-4 mb-6">
-                        {user ?
-                     <BuyNowModal BuyNowFun = {BuyNowFun} deliveryDetails={deliveryDetails} setDeliveryDetails = {setDeliveryDetails}/>
-                    :<Navigate to={"/login"} />}
+                    <div className="flex gap-4 mb-6 bg-pink-600 text-white  rounded-md justify-between items-center">
+                      {user ? (
+                        <BuyNowModal
+                          BuyNowFun={BuyNowFun}
+                          deliveryDetails={deliveryDetails}
+                          setDeliveryDetails={setDeliveryDetails}
+                        />
+                      ) : (
+                        <Navigate to={"/login"} />
+                      )}
                     </div>
                   </div>
                 </div>

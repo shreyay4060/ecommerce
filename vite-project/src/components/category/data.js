@@ -1,79 +1,45 @@
 const category = [
-    
-    
-    {
-        image: 'https://cdn-icons-png.flaticon.com/256/12114/12114279.png',
-        name: 'home'
-    },
-    {
-        image: 'https://cdn-icons-png.flaticon.com/256/11946/11946316.png',
-        name: 'books'
-    },
-    {
-    image: 'https://cdn-icons-png.flaticon.com/256/1041/1041916.png',
-    name: 'watch'
-},
-{
-    image: 'https://cdn-icons-png.flaticon.com/256/3081/3081648.png',
-    name: 'smartphone'
-},
-{
-    image: 'https://cdn-icons-png.flaticon.com/256/2921/2921822.png',
-    name: 'camera'
-},
-{
-    image: 'https://cdn-icons-png.flaticon.com/256/727/727245.png',
-    name: 'headphones'
-},
-{
-    image: 'https://cdn-icons-png.flaticon.com/256/2360/2360544.png',
-    name: 'bag'
-},
-{
-    image: 'https://cdn-icons-png.flaticon.com/256/273/273177.png',
-    name: 'glasses'
-},
-{
-    image: 'https://cdn-icons-png.flaticon.com/256/135/135694.png',
-    name: 'perfume'
-},
-{
-        image: 'https://cdn-icons-png.flaticon.com/256/4359/4359963.png',
-        name: 'fashion'
-    },
-    {
-        image: 'https://cdn-icons-png.flaticon.com/256/11833/11833323.png',
-        name: 'shirt'
-    },
-    {
-        image: 'https://cdn-icons-png.flaticon.com/256/8174/8174424.png',
-        name: 'jacket'
-    },
-    {
-        image: 'https://cdn-icons-png.flaticon.com/256/7648/7648246.png',
-        name: 'mobile'
-    },
-    {
-        image: 'https://cdn-icons-png.flaticon.com/256/12142/12142416.png',
-        name: 'laptop'
-    },
-    {
-        image: 'https://cdn-icons-png.flaticon.com/256/10686/10686553.png',
-        name: 'shoes'
-    },
-{
-    image: 'https://cdn-icons-png.flaticon.com/256/3771/3771426.png',
-    name: 'console'
-},
-{
-    image: 'https://cdn-icons-png.flaticon.com/256/3103/3103459.png',
-    name: 'mug'
-},
-{
-    image: 'https://cdn-icons-png.flaticon.com/256/862/862819.png',
-    name: 'plant'
-}
-
-]
+  {
+    image: "https://www.thedailymeal.com/img/gallery/30-essential-kitchen-tools/intro-1687790000.jpg",
+    name: "home"
+  },
+  {
+    image: "https://i.pinimg.com/564x/3e/05/ce/3e05cefbc7eec79ac175ea8490a67939.jpg",
+    name: "shirt"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=400&q=80",
+    name: "books"
+  },
+  {
+    image: "https://th.bing.com/th/id/OIP.fnUIpSvyIKlof48jPF9mrwHaE7?o=7rm=3&rs=1&pid=ImgDetMain",
+    name: "watch"
+  },
+  {
+    image: "https://th.bing.com/th/id/OIP.BVtjNhPPn6rspiFl3cVsdwHaJ4?rs=1&pid=ImgDetMain",
+    name: "saree"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=400&q=80",
+    name: "smartphone"
+  },
+  
+  {
+    image: "https://m.media-amazon.com/images/I/61WFLydWqpL._SL1500_.jpg",
+    name: "headphones"
+  },
+  {
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400&q=80",
+    name: "shoes"
+  },
+  {
+    image: "https://tech.co.za/wp-content/uploads/2022/06/Dell-XSP-15-9520-v2.png",
+    name: "laptop"
+  },
+  {
+    image: "https://i.etsystatic.com/20214029/r/il/564879/2459843057/il_1588xN.2459843057_1ww7.jpg",
+    name: "fashion"
+  }
+];
 
 export default category;

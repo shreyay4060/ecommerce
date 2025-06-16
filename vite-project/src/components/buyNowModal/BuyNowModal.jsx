@@ -23,7 +23,7 @@ const BuyNowModal = ({deliveryDetails , setDeliveryDetails ,BuyNowFun}) => {
       {/* Open Button */}
       <Button
         onClick={handleOpen}
-        className="w-full px-4 py-3 text-white font-semibold bg-violet-600 hover:bg-violet-700 transition duration-300 rounded-xl shadow-md"
+        className="w-full px-4 py-3 text-white font-bold bg-violet-600 hover:bg-violet-700 transition  rounded-xl shadow-md"
       >
         Buy Now
       </Button>
@@ -77,15 +77,15 @@ const BuyNowModal = ({deliveryDetails , setDeliveryDetails ,BuyNowFun}) => {
 
           {/* Confirm Button */}
           <div className="mt-6">
-            <Button
+            <button
               onClick={()=>{
                 handleOpen();
-                BuyNowFun()
+                BuyNowFun();
               }}
               className="w-full border border-violet-600 bg-violet-600 hover:bg-violet-700 text-white py-2 rounded-md font-medium transition duration-300"
             >
               Confirm & Pay
-            </Button>
+            </button>
           </div>
         </motion.div>
       </Dialog>

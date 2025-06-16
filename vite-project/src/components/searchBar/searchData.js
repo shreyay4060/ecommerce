@@ -1,8 +1,8 @@
 // Search Data
 const searchData = [
   {
-      name: 'Fashion',
-      image: 'https://i.pinimg.com/564x/3e/05/ce/3e05cefbc7eec79ac175ea8490a67939.jpg'
+      name: 'Saree',
+      image: 'https://th.bing.com/th/id/OIP.BVtjNhPPn6rspiFl3cVsdwHaJ4?rs=1&pid=ImgDetMain'
   },
   {
       name: 'Shirt',

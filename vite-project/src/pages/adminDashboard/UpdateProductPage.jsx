@@ -23,6 +23,9 @@ const categoryList = [
     name: "laptop",
   },
   {
+    name: "headphone",
+  },
+  {
     name: "shoes",
   },
   {

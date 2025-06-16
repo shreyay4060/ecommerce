@@ -15,7 +15,7 @@ function AdminDashboard () {
     // total number of product 
     const context = useContext(myContexts);
 
-    const {totalProduct , getAllProduct , getAllUsers } = context;
+    const {totalProduct , getAllOrder , getAllUsers } = context;
     console.log(totalProduct)
 
     return (
@@ -102,7 +102,7 @@ function AdminDashboard () {
                                         <path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1" />
                                     </svg>
                                 </div>
-                                <h2 className="title-font font-medium text-3xl  fonts1" >({getAllProduct.length})</h2>
+                                <h2 className="title-font font-medium text-3xl  fonts1" >({getAllOrder.length})</h2>
                                 <p className="   font-bold" >Total Order</p>
                             </div>
                         </Tab>

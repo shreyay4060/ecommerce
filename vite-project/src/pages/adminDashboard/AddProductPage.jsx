@@ -14,6 +14,12 @@ const categoryList = [
     name: "shirt",
   },
   {
+    name: "saree",
+  },
+  {
+    name: "watch",
+  },
+  {
     name: "jacket",
   },
   {
@@ -21,6 +27,9 @@ const categoryList = [
   },
   {
     name: "laptop",
+  },
+  {
+    name: "headphone",
   },
   {
     name: "shoes",
@@ -46,7 +55,7 @@ const AddProductPage = () => {
   const [addProduct, setAddProduct] = useState({
     title: "",
     price: "",
-    imgURL: "",
+    productImageUrl: "",
     category: "",
     description: "",
     quantity: 1,
@@ -63,7 +72,7 @@ const AddProductPage = () => {
     if (
       addProduct.title === "" ||
       addProduct.price === "" ||
-      addProduct.imgURL === "" ||
+      addProduct.productImageUrl === "" ||
       addProduct.category === "" ||
       addProduct.description === ""
     ) {
@@ -144,13 +153,14 @@ const AddProductPage = () => {
           <div className="mb-3">
             <input
               type="text"
-              name="imgURL"
+              name="productImageUrl"
               placeholder="Product Image Url"
               onChange={handleChange}
-              value={addProduct.imgURL}
+              value={addProduct.productImageUrl}
               className="bg-pink-50 border border-black px-2 py-2 w-80 rounded-md outline-none"
             />
           </div>
+
 
           {/* Input Four  */}
           <div className="mb-3">
