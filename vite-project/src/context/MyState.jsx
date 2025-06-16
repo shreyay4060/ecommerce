@@ -14,6 +14,10 @@ import { toast } from "react-hot-toast";
 import { fireDB } from "../firebase/FirebaseConfig";
 
 export default function MyState({ children }) {
+
+  // search state
+ const [searchedCategory, setSearchedCategory] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const [getAllProduct, setGetAllProduct] = useState([]);
@@ -138,6 +142,8 @@ export default function MyState({ children }) {
           getAllUsers,
           deleteOrderFun,
           deleteUserFun,
+          searchedCategory,
+          setSearchedCategory,
         }}
       >
         {children}

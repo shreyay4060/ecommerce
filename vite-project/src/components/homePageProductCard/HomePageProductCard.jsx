@@ -6,12 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart, deleteFromCart } from "../../redux/cartSlice";
 import toast from "react-hot-toast";
 
-function HomePageProductCard() {
+function HomePageProductCard({products}) {
   const navigate = useNavigate();
 
   // context
   const context = useContext(myContexts);
   const { getAllProduct, loading } = context;
+  const displayProducts = products || getAllProduct;
 
   // selectors for redux
   const cartItems = useSelector((state) => state.cart);
@@ -55,7 +56,7 @@ useEffect(()=>{
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-5 mx-auto">
           <div className="flex flex-wrap -m-4">
-            {getAllProduct.slice(0, 8).map((item, index) => {
+            {displayProducts.slice(0, 8).map((item, index) => {
               const { id, productImageUrl, title, price, description } = item;
               return (
                 <div
