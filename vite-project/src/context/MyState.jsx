@@ -34,9 +34,6 @@ export default function MyState({ children }) {
     }
   };
 
-  useEffect(() => {
-    getAllProductFunction();
-  }, []);
   const totalProduct = getAllProduct.length;
 
   // order state
@@ -45,31 +42,53 @@ export default function MyState({ children }) {
 
   // getOrderFun
   const getAllOrderFunction = async () => {
-        setLoading(true);
-        try {
-            const q = query(
-                collection(fireDB, "order"),
-                orderBy('time')
-            );
-            const data = onSnapshot(q, (QuerySnapshot) => {
-                let orderArray = [];
-                QuerySnapshot.forEach((doc) => {
-                    orderArray.push({ ...doc.data(), id: doc.id });
-                });
-                setGetAllOrder(orderArray);
-                setLoading(false);
-            });
-            return () => data;
-        } catch (error) {
-            console.log(error);
-            setLoading(false);
-        }
+    setLoading(true);
+    try {
+      const q = query(collection(fireDB, "order"), orderBy("time"));
+      const data = onSnapshot(q, (QuerySnapshot) => {
+        let orderArray = [];
+        QuerySnapshot.forEach((doc) => {
+          orderArray.push({ ...doc.data(), id: doc.id });
+        });
+        setGetAllOrder(orderArray);
+        setLoading(false);
+      });
+      return () => data;
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
     }
+  };
 
-    useEffect(() => {
-        getAllProductFunction();
-        getAllOrderFunction();
-    }, []);
+  //   getAllUser
+
+  const [getAllUsers, setGetAllUsers] = useState([]);
+
+  // getAllUserFun
+  const getAllUserFun = async () => {
+    setLoading(true);
+    try {
+      const q = query(collection(fireDB, "user"), orderBy("time"));
+      const data = onSnapshot(q,(QuerySnapshot)=>{
+          let usersArray = [];
+        QuerySnapshot.forEach((doc)=>{
+            usersArray.push({...doc.data(),id:doc.id});
+        });
+        setGetAllUsers(usersArray);
+        setLoading(false);
+      })
+      return()=>data;
+    } catch (error) {
+      console.log(error);
+      setLoading(false)
+    }
+  };
+
+  useEffect(() => {
+    getAllProductFunction();
+    getAllOrderFunction();
+    getAllUserFun();
+  }, []);
 
   return (
     <>
@@ -81,7 +100,8 @@ export default function MyState({ children }) {
           getAllProductFunction,
           getAllProduct,
           getAllOrder,
-          getAllOrderFunction
+          getAllOrderFunction,
+          getAllUsers
         }}
       >
         {children}

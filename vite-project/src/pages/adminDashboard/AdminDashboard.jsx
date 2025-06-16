@@ -15,33 +15,33 @@ function AdminDashboard () {
     // total number of product 
     const context = useContext(myContexts);
 
-    const {totalProduct} = context;
+    const {totalProduct , getAllProduct } = context;
     console.log(totalProduct)
 
     return (
         <Layout>
             {/* Top */}
-            <div className="top mb-5 px-5 mt-5">
+            {/* <div className="top mb-5 px-5 mt-5">
                 <div className=" bg-pink-50 py-5 border border-pink-600 rounded-lg">
                     <h1 className=" text-center text-2xl font-bold text-pink-500">Admin Dashboard</h1>
                 </div>
-            </div>
+            </div> */}
 
             <div className="px-5">
                 {/* Mid  */}
                 <div className="mid mb-5">
-                    {/* main  */}
-                    <div className=" bg-pink-50 py-5 rounded-xl border border-pink-600">
-                        {/* image  */}
+                    
+                    {/* <div className=" bg-pink-50 py-5 rounded-xl border border-pink-600">
+                 
                         <div className="flex justify-center">
                             <img src="https://cdn-icons-png.flaticon.com/128/2202/2202112.png" alt="" />
                         </div>
-                        {/* text  */}
+                    
                         <div className="">
                             <h1 className=" text-center text-lg text-pink-500"><span className=" font-bold">Name :</span> {admin.name}</h1>
                             <h1 className=" text-center text-lg text-pink-500"><span className=" font-bold">Email :</span> {admin.email}</h1>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Bottom */}
@@ -102,7 +102,7 @@ function AdminDashboard () {
                                         <path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1" />
                                     </svg>
                                 </div>
-                                <h2 className="title-font font-medium text-3xl  fonts1" >(10)</h2>
+                                <h2 className="title-font font-medium text-3xl  fonts1" >({getAllProduct.length})</h2>
                                 <p className="   font-bold" >Total Order</p>
                             </div>
                         </Tab>

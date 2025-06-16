@@ -6,13 +6,29 @@ import myContexts from "../../context/myContexts";
 const UserDashboard = () => {
   // user
   const user = JSON.parse(localStorage.getItem("users"));
-  console.log(user)
+  console.log(user);
 
   const context = useContext(myContexts);
   const { loading, getAllOrder } = context;
   // console.log(getAllOrder)
 
-  // console.log(user)
+
+
+  // delivery date function
+  const getDeliveryDate = (date) => {
+    const deliveryDate = new Date(date);
+    deliveryDate.setDate(deliveryDate.getDate() + 5);
+
+    // Format the result with month name (e.g., "June 21, 2025")
+    return deliveryDate.toLocaleDateString("default", {
+      day: "numeric",
+      month: "long",
+    });
+  };
+
+//   console.log(getDeliveryDate(new Date()));
+
+
   return (
     <Layout>
       <div className=" container mx-auto px-4 py-5 lg:py-8">
@@ -108,9 +124,7 @@ const UserDashboard = () => {
                                       <div className="text-sm font-medium text-gray-900">
                                         #{id}
                                       </div>
-                                    </div>
-
-                                    <div className="mb-4">
+                                      <br />
                                       <div className="text-sm font-semibold">
                                         Date
                                       </div>
@@ -120,10 +134,15 @@ const UserDashboard = () => {
                                     </div>
 
                                     <div className="mb-4">
+                                      <div className="text-sm font-semibold"></div>
+                                      <div className="text-sm font-medium text-gray-900"></div>
+                                    </div>
+
+                                    <div className="mb-4">
                                       <div className="text-sm font-semibold">
                                         Total Amount
                                       </div>
-                                      <div className="text-sm font-medium text-gray-900">
+                                      <div className="text-sm  font-bold text-gray-900">
                                         ₹ {price * quantity}
                                       </div>
                                     </div>
@@ -134,6 +153,16 @@ const UserDashboard = () => {
                                       </div>
                                       <div className="text-sm font-medium text-green-800 first-letter:uppercase">
                                         {status}
+                                      </div>
+                                    </div>
+                                    <div className="mb-4">
+                                      <div className="text-sm font-semibold">
+                                        Deliver on
+                                      </div>
+                                      <div className="text-sm font-medium text-green-800 first-letter:uppercase">
+                                        {getDeliveryDate(date)}
+
+                                        <br />
                                       </div>
                                     </div>
                                   </div>
