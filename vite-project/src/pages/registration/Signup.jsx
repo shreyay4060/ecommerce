@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { auth, fireDB } from "../../firebase/FirebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
-import  Loader  from "../../components/loader/Loader";
+import Loader from "../../components/loader/Loader";
 
 const Signup = ({ values, onChange, onClose, onSubmit }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -45,6 +45,7 @@ const Signup = ({ values, onChange, onClose, onSubmit }) => {
     ) {
       return toast.error("Please fill all the fields");
     }
+
     setLoading(true);
 
     try {
@@ -53,6 +54,7 @@ const Signup = ({ values, onChange, onClose, onSubmit }) => {
         userSignup.email,
         userSignup.password
       );
+
       const user = {
         name: userSignup.name,
         email: userSignup.email,
@@ -66,29 +68,24 @@ const Signup = ({ values, onChange, onClose, onSubmit }) => {
         }),
       };
 
-      const userReference = collection(fireDB,"user")
+      const userReference = collection(fireDB, "user"); // ✅ KEEP "user" as you already use it elsewhere
+      await addDoc(userReference, user);
 
-      // add the user datausing addDoc
-     await addDoc(userReference , user)
-
-      // reset form
       setUserSignup({
         name: "",
         email: "",
         password: "",
       });
 
-      toast.success("Successfully signedin...")
-
-      setLoading(false)
-      navigate("/login")
+      toast.success("Successfully signed up...");
+      navigate("/homePage");
+      setLoading(false);
     } catch (error) {
-      console.log("there is an error : " + error);
-      setLoading(false)
+      console.log("Signup error: ", error.message);
+      toast.error("Signup failed. Please try again.");
+      setLoading(false);
     }
   };
-
- 
 
   return (
     <>
